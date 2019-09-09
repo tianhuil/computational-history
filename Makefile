@@ -2,7 +2,7 @@ SHELL := /bin/bash
 ACTIVATE := source env/bin/activate
 
 create:
-	python3 -m venv env
+	python3 -m venv env --without-pip
 
 install:
 	$(ACTIVATE) && pip3 install -r requirements.txt
