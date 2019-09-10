@@ -1,7 +1,6 @@
 SHELL := /bin/bash
 ACTIVATE := source env/bin/activate
 DATA_DIR := /mnt/volume_sfo2_02/
-SPARK
 
 create:
 	python3 -m venv env
