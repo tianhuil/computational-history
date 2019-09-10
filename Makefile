@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 ACTIVATE := source env/bin/activate
 DATA_DIR := /mnt/volume_sfo2_02/
+SPARK
 
 create:
 	python3 -m venv env
@@ -12,7 +13,7 @@ ipython:
 	$(ACTIVATE) && ipython --pdb
 
 jupyter:
-	$(ACTIVATE) && jupyter notebook
+	$(ACTIVATE) && jupyter lab
 
 download:
 	$(ACTIVATE) && google-ngram-downloader download -l eng-us -n 5 -v -o $(DATA_DIR)/downloads/google_ngrams/5/ 2> logs/log.5.txt
