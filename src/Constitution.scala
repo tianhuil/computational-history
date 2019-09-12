@@ -1,3 +1,5 @@
+import org.apache.hadoop.io.compress.GzipCodec
+
 val articles = List(
     "article one",
     "article two",
@@ -49,5 +51,5 @@ val inputFiles = Seq(
 val data = spark.sparkContext.union(inputFiles.map(file => spark.read.textFile(file).rdd))
 
 (data.filter(line => queries.exists(q => line.toLowerCase().contains(q)))
-    .repartition(5)
-    .saveAsTextFile("/mnt/volume_sfo2_03/downloads/google_ngrams/5-part/constitution-sample"))
+    .repartition(1)
+    .saveAsTextFile("/mnt/volume_sfo2_03/downloads/google_ngrams/5-part/constitution-sample-gz", classOf[GzipCodec]))
