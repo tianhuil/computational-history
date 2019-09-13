@@ -8,7 +8,7 @@ import pandas as pd
 
 def read_ngrams(glob_pattern):
   columns = ['ngram', 'year', 'total', 'distinct']
-  return dd.read_csv(glob_pattern, sep='\t', header=None, names=columns)
+  return dd.read_csv(glob_pattern, sep='\t', blocksize=None, compression='gzip', header=None, names=columns)
 
 def save_ngrams(df, output_dir):
   dfs = df.to_delayed()
