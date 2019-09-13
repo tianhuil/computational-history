@@ -19,14 +19,14 @@ def cat_file(filenames):
 def chunk_iters(filenames, chunksize):
   yield from chunker(cat_file(filenames), n=chunksize)
 
-def write_chunks(filenames, output_dir, chunksize=int(1e6), overwrite=False):
+def write_chunks(filenames, output_dir, chunksize, overwrite=False):
   if not os.path.exists(output_dir):
     os.makedirs(output_dir)
-  elif not overwrite and os.path.exists(output_dir):
-    raise IOError("Director {} already exists".format(output_dir))
-  else:  # overwrite and os.path.exists(output_dir)
+  elif overwrite and os.path.exists(output_dir):
     for filename in os.listdir(output_dir):
       os.remove(os.path.join(output_dir, filename))
+  else:  # not overwrite and os.path.exists(output_dir)
+    raise IOError("Director {} already exists".format(output_dir))
 
   for i, chunk in enumerate(chunk_iters(sorted(filenames), chunksize=chunksize)):
     with gzip.open(output_dir + '/{:05d}.gz'.format(i), 'wt') as fh:
@@ -35,5 +35,6 @@ def write_chunks(filenames, output_dir, chunksize=int(1e6), overwrite=False):
 
 if __name__ == '__main__':
   GLOB = "/mnt/volume_sfo2_02/downloads/google_ngrams/5/googlebooks-eng-us-all-5gram-20120701-*.gz"
-  OUTPUT_DIR = "/mnt/volume_sfo2_02/downloads/google_ngrams/5-part/"
-  write_chunks(glob(GLOB), OUTPUT_DIR)
+  OUTPUT_DIR = "/mnt/volume_sfo2_03/downloads/google_ngrams/5-part/"
+  CHUNKSIZE = int(3e6)
+  write_chunks(glob(GLOB), OUTPUT_DIR, CHUNKSIZE)
