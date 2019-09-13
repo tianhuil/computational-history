@@ -1,3 +1,4 @@
 -e git+git://github.com/tianhuil/google-ngram-downloader.git@master#egg=google-ngram-downloader
 jupyter
 ipython
+matplotlib
