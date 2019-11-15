@@ -25,6 +25,59 @@ def save_ngrams(df, output_dir):
   ]
   dd.compute(*writes)
 
+def process(df_raw):
+  df = (pd.concat([
+    df_raw[['query', w, 'year', 'total', 'distinct']].rename(columns={w: 'w'})
+    for w in ['r1', 'r2', 'r3']
+  ]).groupby(['w', 'query', 'year'])
+      .sum()
+      .reset_index())
+  df['decade'] = df['year'] // 10 * 10
+  return df
+
+
+ARTICLES = [
+    "article one",
+    "article two",
+    "article three",
+    "article four",
+    "article five",
+    "article six",
+    "article seven"
+]
+
+AMENDMENTS = [
+    "first amendment",
+    "second amendment",
+    "third amendment",
+    "fourth amendment",
+    "fifth amendment",
+    "sixth amendment",
+    "seventh amendment",
+    "eighth amendment",
+    "ninth amendment",
+    "tenth amendment",
+    "eleventh amendment",
+    "twelfth amendment",
+    "thirteenth amendment",
+    "fourteenth amendment",
+    "fifteenth amendment",
+    "sixteenth amendment",
+    "seventeenth amendment",
+    "eighteenth amendment",
+    "nineteenth amendment",
+    "twentieth amendment",
+    "twenty-first amendment",
+    "twenty-second amendment",
+    "twenty-third amendment",
+    "twenty-fourth amendment",
+    "twenty-fifth amendment",
+    "twenty-sixth amendment",
+    "twenty-seventh amendment"
+]
+
+QUERIES = ARTICLES + AMENDMENTS
+
 if __name__ == '__main__':
   assert [x for x in chunker(range(6), 2)] == [[0, 1], [2, 3], [4, 5]]
   assert [x for x in chunker(range(6), 4)] == [[0, 1, 2, 3], [4, 5]]
